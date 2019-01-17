@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "night"
+    },
+    "frameIndex": 663,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 598,
+                "x2": 1155,
+                "y1": 483,
+                "y2": 820
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1291,
+                "x2": 1936,
+                "y1": 618,
+                "y2": 918
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1133,
+                "x2": 1364,
+                "y1": 559,
+                "y2": 729
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1074,
+                "x2": 1155,
+                "y1": 544,
+                "y2": 662
+            },
+            "category": "Car"
+        }
+    ]
+}

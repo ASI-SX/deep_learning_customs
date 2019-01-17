@@ -1,0 +1,81 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "morning"
+    },
+    "frameIndex": 768,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1797,
+                "x2": 1854,
+                "y1": 606,
+                "y2": 704
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 876,
+                "x2": 910,
+                "y1": 577,
+                "y2": 654
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 416,
+                "x2": 534,
+                "y1": 519,
+                "y2": 800
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 139,
+                "x2": 257,
+                "y1": 497,
+                "y2": 812
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 0,
+                "x2": 223,
+                "y1": 474,
+                "y2": 944
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1136,
+                "x2": 1337,
+                "y1": 544,
+                "y2": 700
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1224,
+                "x2": 1814,
+                "y1": 567,
+                "y2": 871
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 949,
+                "x2": 1182,
+                "y1": 546,
+                "y2": 814
+            },
+            "category": "Car"
+        }
+    ]
+}

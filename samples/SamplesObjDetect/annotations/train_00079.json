@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "morning"
+    },
+    "frameIndex": 1333,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 882,
+                "x2": 1376,
+                "y1": 397,
+                "y2": 885
+            },
+            "category": "SVehicle"
+        },
+        {
+            "box2d": {
+                "x1": 1827,
+                "x2": 1936,
+                "y1": 471,
+                "y2": 790
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1248,
+                "x2": 1337,
+                "y1": 261,
+                "y2": 290
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1311,
+                "x2": 1851,
+                "y1": 299,
+                "y2": 839
+            },
+            "category": "Truck"
+        }
+    ]
+}

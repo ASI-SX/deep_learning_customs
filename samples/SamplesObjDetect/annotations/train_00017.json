@@ -1,0 +1,81 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "night"
+    },
+    "frameIndex": 1369,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 238,
+                "x2": 278,
+                "y1": 538,
+                "y2": 652
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 391,
+                "x2": 442,
+                "y1": 534,
+                "y2": 648
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 687,
+                "x2": 738,
+                "y1": 379,
+                "y2": 451
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 1150,
+                "x2": 1232,
+                "y1": 309,
+                "y2": 350
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 957,
+                "x2": 989,
+                "y1": 513,
+                "y2": 533
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1434,
+                "x2": 1936,
+                "y1": 636,
+                "y2": 1086
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1136,
+                "x2": 1360,
+                "y1": 559,
+                "y2": 716
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 878,
+                "x2": 1146,
+                "y1": 580,
+                "y2": 811
+            },
+            "category": "Car"
+        }
+    ]
+}

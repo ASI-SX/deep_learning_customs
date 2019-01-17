@@ -1,0 +1,18 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "day"
+    },
+    "frameIndex": 4635,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 930,
+                "x2": 1041,
+                "y1": 489,
+                "y2": 674
+            },
+            "category": "Truck"
+        }
+    ]
+}

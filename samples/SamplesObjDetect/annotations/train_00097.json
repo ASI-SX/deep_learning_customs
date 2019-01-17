@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "morning"
+    },
+    "frameIndex": 3103,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 576,
+                "x2": 642,
+                "y1": 590,
+                "y2": 634
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 757,
+                "x2": 775,
+                "y1": 577,
+                "y2": 619
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 2,
+                "x2": 556,
+                "y1": 575,
+                "y2": 1181
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 910,
+                "x2": 1024,
+                "y1": 535,
+                "y2": 667
+            },
+            "category": "Truck"
+        }
+    ]
+}

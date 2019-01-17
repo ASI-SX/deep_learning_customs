@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "day"
+    },
+    "frameIndex": 917,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 834,
+                "x2": 896,
+                "y1": 576,
+                "y2": 623
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 731,
+                "x2": 799,
+                "y1": 456,
+                "y2": 520
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 143,
+                "x2": 262,
+                "y1": 572,
+                "y2": 619
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 4,
+                "x2": 80,
+                "y1": 556,
+                "y2": 605
+            },
+            "category": "Car"
+        }
+    ]
+}

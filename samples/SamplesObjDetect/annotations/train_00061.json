@@ -1,0 +1,36 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "night"
+    },
+    "frameIndex": 1522,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1252,
+                "x2": 1295,
+                "y1": 502,
+                "y2": 528
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 997,
+                "x2": 1035,
+                "y1": 493,
+                "y2": 517
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1230,
+                "x2": 1462,
+                "y1": 592,
+                "y2": 678
+            },
+            "category": "Car"
+        }
+    ]
+}

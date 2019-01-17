@@ -1,0 +1,135 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "day"
+    },
+    "frameIndex": 6504,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 453,
+                "x2": 547,
+                "y1": 255,
+                "y2": 326
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 106,
+                "x2": 155,
+                "y1": 557,
+                "y2": 649
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 867,
+                "x2": 907,
+                "y1": 422,
+                "y2": 449
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 938,
+                "x2": 1093,
+                "y1": 573,
+                "y2": 885
+            },
+            "category": "Motorbike"
+        },
+        {
+            "box2d": {
+                "x1": 15,
+                "x2": 51,
+                "y1": 548,
+                "y2": 641
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 51,
+                "x2": 79,
+                "y1": 550,
+                "y2": 633
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 89,
+                "x2": 115,
+                "y1": 558,
+                "y2": 618
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 576,
+                "x2": 604,
+                "y1": 548,
+                "y2": 625
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 594,
+                "x2": 625,
+                "y1": 552,
+                "y2": 628
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1136,
+                "x2": 1166,
+                "y1": 499,
+                "y2": 522
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 666,
+                "x2": 737,
+                "y1": 570,
+                "y2": 608
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 801,
+                "x2": 1024,
+                "y1": 532,
+                "y2": 626
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1301,
+                "x2": 1529,
+                "y1": 557,
+                "y2": 676
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1633,
+                "x2": 1649,
+                "y1": 610,
+                "y2": 644
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

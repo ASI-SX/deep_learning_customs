@@ -1,0 +1,63 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "day"
+    },
+    "frameIndex": 1849,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1227,
+                "x2": 1935,
+                "y1": 457,
+                "y2": 951
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1116,
+                "x2": 1285,
+                "y1": 492,
+                "y2": 693
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 999,
+                "x2": 1129,
+                "y1": 565,
+                "y2": 657
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 929,
+                "x2": 992,
+                "y1": 537,
+                "y2": 574
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 890,
+                "x2": 1027,
+                "y1": 572,
+                "y2": 715
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 713,
+                "x2": 756,
+                "y1": 474,
+                "y2": 516
+            },
+            "category": "Signs"
+        }
+    ]
+}

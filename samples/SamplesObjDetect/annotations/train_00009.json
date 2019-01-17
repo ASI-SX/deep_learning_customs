@@ -1,0 +1,81 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 4210,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 976,
+                "x2": 1034,
+                "y1": 557,
+                "y2": 659
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1158,
+                "x2": 1197,
+                "y1": 557,
+                "y2": 668
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1140,
+                "x2": 1247,
+                "y1": 562,
+                "y2": 671
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 1064,
+                "x2": 1146,
+                "y1": 542,
+                "y2": 618
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 355,
+                "x2": 667,
+                "y1": 563,
+                "y2": 679
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 955,
+                "x2": 1016,
+                "y1": 353,
+                "y2": 383
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 191,
+                "x2": 229,
+                "y1": 528,
+                "y2": 630
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1535,
+                "x2": 1569,
+                "y1": 446,
+                "y2": 507
+            },
+            "category": "Signs"
+        }
+    ]
+}

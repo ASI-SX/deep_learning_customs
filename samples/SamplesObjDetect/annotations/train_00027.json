@@ -1,0 +1,99 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 853,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 379,
+                "x2": 416,
+                "y1": 500,
+                "y2": 581
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 706,
+                "x2": 821,
+                "y1": 581,
+                "y2": 659
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 864,
+                "x2": 900,
+                "y1": 432,
+                "y2": 477
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 886,
+                "x2": 947,
+                "y1": 557,
+                "y2": 600
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 886,
+                "x2": 937,
+                "y1": 573,
+                "y2": 613
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 915,
+                "x2": 1158,
+                "y1": 532,
+                "y2": 803
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1459,
+                "x2": 1486,
+                "y1": 580,
+                "y2": 623
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 627,
+                "x2": 651,
+                "y1": 557,
+                "y2": 626
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 665,
+                "x2": 693,
+                "y1": 553,
+                "y2": 630
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1343,
+                "x2": 1392,
+                "y1": 591,
+                "y2": 654
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

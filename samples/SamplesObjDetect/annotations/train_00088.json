@@ -1,0 +1,117 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "day"
+    },
+    "frameIndex": 6796,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 261,
+                "x2": 409,
+                "y1": 89,
+                "y2": 210
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1113,
+                "x2": 1278,
+                "y1": 568,
+                "y2": 737
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 316,
+                "x2": 340,
+                "y1": 577,
+                "y2": 623
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 340,
+                "x2": 361,
+                "y1": 576,
+                "y2": 623
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 549,
+                "x2": 616,
+                "y1": 578,
+                "y2": 630
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 726,
+                "x2": 791,
+                "y1": 574,
+                "y2": 630
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 777,
+                "x2": 861,
+                "y1": 581,
+                "y2": 638
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 842,
+                "x2": 956,
+                "y1": 586,
+                "y2": 652
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 961,
+                "x2": 1115,
+                "y1": 575,
+                "y2": 672
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 870,
+                "x2": 1123,
+                "y1": 528,
+                "y2": 650
+            },
+            "category": "Bus"
+        },
+        {
+            "box2d": {
+                "x1": 1292,
+                "x2": 1371,
+                "y1": 586,
+                "y2": 686
+            },
+            "category": "Motorbike"
+        },
+        {
+            "box2d": {
+                "x1": 1635,
+                "x2": 1693,
+                "y1": 582,
+                "y2": 707
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

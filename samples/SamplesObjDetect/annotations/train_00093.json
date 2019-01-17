@@ -1,0 +1,18 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "morning"
+    },
+    "frameIndex": 2455,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1371,
+                "x2": 1436,
+                "y1": 598,
+                "y2": 643
+            },
+            "category": "Car"
+        }
+    ]
+}

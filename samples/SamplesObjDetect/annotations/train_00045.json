@@ -1,0 +1,117 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 931,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 919,
+                "x2": 1065,
+                "y1": 598,
+                "y2": 696
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1140,
+                "x2": 1207,
+                "y1": 605,
+                "y2": 683
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1421,
+                "x2": 1934,
+                "y1": 542,
+                "y2": 898
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1103,
+                "x2": 1156,
+                "y1": 611,
+                "y2": 653
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 163,
+                "x2": 236,
+                "y1": 535,
+                "y2": 764
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 233,
+                "x2": 307,
+                "y1": 548,
+                "y2": 750
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 754,
+                "x2": 803,
+                "y1": 585,
+                "y2": 681
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 899,
+                "x2": 923,
+                "y1": 596,
+                "y2": 659
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 923,
+                "x2": 940,
+                "y1": 596,
+                "y2": 646
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 869,
+                "x2": 897,
+                "y1": 509,
+                "y2": 548
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 869,
+                "x2": 897,
+                "y1": 543,
+                "y2": 577
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 1339,
+                "x2": 1365,
+                "y1": 620,
+                "y2": 664
+            },
+            "category": "Bicycle"
+        }
+    ]
+}

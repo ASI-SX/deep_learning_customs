@@ -1,0 +1,90 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "morning"
+    },
+    "frameIndex": 749,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 874,
+                "x2": 1163,
+                "y1": 535,
+                "y2": 863
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 887,
+                "x2": 915,
+                "y1": 490,
+                "y2": 512
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1001,
+                "x2": 1037,
+                "y1": 470,
+                "y2": 499
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 744,
+                "x2": 770,
+                "y1": 572,
+                "y2": 623
+            },
+            "category": "Motorbike"
+        },
+        {
+            "box2d": {
+                "x1": 1237,
+                "x2": 1298,
+                "y1": 585,
+                "y2": 701
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 762,
+                "x2": 780,
+                "y1": 568,
+                "y2": 613
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1316,
+                "x2": 1370,
+                "y1": 590,
+                "y2": 726
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1511,
+                "x2": 1580,
+                "y1": 590,
+                "y2": 764
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1065,
+                "x2": 1243,
+                "y1": 587,
+                "y2": 727
+            },
+            "category": "Car"
+        }
+    ]
+}

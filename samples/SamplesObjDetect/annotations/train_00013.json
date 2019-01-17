@@ -1,0 +1,198 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 3860,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 331,
+                "x2": 416,
+                "y1": 257,
+                "y2": 351
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 919,
+                "x2": 943,
+                "y1": 512,
+                "y2": 545
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 796,
+                "x2": 834,
+                "y1": 480,
+                "y2": 500
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 1308,
+                "x2": 1356,
+                "y1": 350,
+                "y2": 376
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 140,
+                "x2": 229,
+                "y1": 528,
+                "y2": 716
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 69,
+                "x2": 125,
+                "y1": 542,
+                "y2": 712
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 216,
+                "x2": 336,
+                "y1": 558,
+                "y2": 613
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 381,
+                "x2": 510,
+                "y1": 572,
+                "y2": 623
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 912,
+                "x2": 938,
+                "y1": 585,
+                "y2": 643
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 955,
+                "x2": 973,
+                "y1": 590,
+                "y2": 643
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 999,
+                "x2": 1017,
+                "y1": 593,
+                "y2": 643
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1017,
+                "x2": 1032,
+                "y1": 593,
+                "y2": 635
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1118,
+                "x2": 1138,
+                "y1": 596,
+                "y2": 644
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1140,
+                "x2": 1158,
+                "y1": 596,
+                "y2": 643
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1153,
+                "x2": 1169,
+                "y1": 596,
+                "y2": 644
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1166,
+                "x2": 1182,
+                "y1": 596,
+                "y2": 644
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1230,
+                "x2": 1257,
+                "y1": 600,
+                "y2": 649
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1441,
+                "x2": 1504,
+                "y1": 603,
+                "y2": 746
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1567,
+                "x2": 1609,
+                "y1": 605,
+                "y2": 767
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1090,
+                "x2": 1107,
+                "y1": 593,
+                "y2": 639
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 750,
+                "x2": 775,
+                "y1": 580,
+                "y2": 630
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

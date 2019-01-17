@@ -1,0 +1,27 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 2714,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 909,
+                "x2": 991,
+                "y1": 586,
+                "y2": 659
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1384,
+                "x2": 1540,
+                "y1": 603,
+                "y2": 659
+            },
+            "category": "Car"
+        }
+    ]
+}

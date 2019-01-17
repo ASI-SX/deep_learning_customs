@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 8038,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 909,
+                "x2": 949,
+                "y1": 571,
+                "y2": 605
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 883,
+                "x2": 934,
+                "y1": 526,
+                "y2": 546
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 811,
+                "x2": 848,
+                "y1": 525,
+                "y2": 543
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 786,
+                "x2": 800,
+                "y1": 526,
+                "y2": 544
+            },
+            "category": "Signs"
+        }
+    ]
+}

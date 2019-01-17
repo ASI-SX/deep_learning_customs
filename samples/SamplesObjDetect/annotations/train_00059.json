@@ -1,0 +1,90 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "day"
+    },
+    "frameIndex": 1776,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1072,
+                "x2": 1116,
+                "y1": 417,
+                "y2": 462
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 998,
+                "x2": 1065,
+                "y1": 368,
+                "y2": 394
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 895,
+                "x2": 1115,
+                "y1": 515,
+                "y2": 799
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 732,
+                "x2": 851,
+                "y1": 484,
+                "y2": 644
+            },
+            "category": "SVehicle"
+        },
+        {
+            "box2d": {
+                "x1": 678,
+                "x2": 703,
+                "y1": 457,
+                "y2": 515
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 416,
+                "x2": 468,
+                "y1": 364,
+                "y2": 451
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 473,
+                "x2": 528,
+                "y1": 404,
+                "y2": 454
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 374,
+                "x2": 406,
+                "y1": 543,
+                "y2": 611
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 801,
+                "x2": 910,
+                "y1": 557,
+                "y2": 615
+            },
+            "category": "Car"
+        }
+    ]
+}

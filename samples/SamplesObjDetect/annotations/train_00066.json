@@ -1,0 +1,54 @@
+{
+    "attributes": {
+        "route": "Tokyo2",
+        "timeofday": "day"
+    },
+    "frameIndex": 436,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 178,
+                "x2": 441,
+                "y1": 538,
+                "y2": 693
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 72,
+                "x2": 237,
+                "y1": 537,
+                "y2": 636
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1664,
+                "x2": 1760,
+                "y1": 606,
+                "y2": 777
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1438,
+                "x2": 1532,
+                "y1": 584,
+                "y2": 784
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1399,
+                "x2": 1460,
+                "y1": 576,
+                "y2": 764
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

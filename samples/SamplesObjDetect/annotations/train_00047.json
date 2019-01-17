@@ -1,0 +1,54 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 4461,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 617,
+                "x2": 703,
+                "y1": 528,
+                "y2": 684
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1009,
+                "x2": 1046,
+                "y1": 510,
+                "y2": 527
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 914,
+                "x2": 994,
+                "y1": 280,
+                "y2": 316
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 838,
+                "x2": 1078,
+                "y1": 568,
+                "y2": 779
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 820,
+                "x2": 836,
+                "y1": 569,
+                "y2": 601
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

@@ -1,0 +1,81 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 2486,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 1280,
+                "x2": 1407,
+                "y1": 583,
+                "y2": 643
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 876,
+                "x2": 925,
+                "y1": 557,
+                "y2": 595
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 2,
+                "x2": 468,
+                "y1": 588,
+                "y2": 1031
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 471,
+                "x2": 756,
+                "y1": 516,
+                "y2": 715
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 760,
+                "x2": 806,
+                "y1": 551,
+                "y2": 677
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 697,
+                "x2": 843,
+                "y1": 467,
+                "y2": 669
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 932,
+                "x2": 994,
+                "y1": 563,
+                "y2": 593
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 1238,
+                "x2": 1258,
+                "y1": 575,
+                "y2": 609
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

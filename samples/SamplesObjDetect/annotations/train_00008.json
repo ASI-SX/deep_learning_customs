@@ -1,0 +1,18 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "day"
+    },
+    "frameIndex": 128,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 914,
+                "x2": 1014,
+                "y1": 480,
+                "y2": 631
+            },
+            "category": "Truck"
+        }
+    ]
+}

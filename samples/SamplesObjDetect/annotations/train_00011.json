@@ -1,0 +1,45 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "morning"
+    },
+    "frameIndex": 3101,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 0,
+                "x2": 641,
+                "y1": 555,
+                "y2": 1022
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 2,
+                "x2": 345,
+                "y1": 297,
+                "y2": 848
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 895,
+                "x2": 1016,
+                "y1": 532,
+                "y2": 673
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1723,
+                "x2": 1771,
+                "y1": 615,
+                "y2": 709
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}

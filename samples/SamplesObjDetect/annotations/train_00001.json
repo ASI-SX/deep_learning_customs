@@ -1,0 +1,180 @@
+{
+    "attributes": {
+        "route": "Tokyo1",
+        "timeofday": "night"
+    },
+    "frameIndex": 3302,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 0,
+                "x2": 165,
+                "y1": 620,
+                "y2": 691
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 142,
+                "x2": 211,
+                "y1": 581,
+                "y2": 746
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 369,
+                "x2": 432,
+                "y1": 555,
+                "y2": 731
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 772,
+                "x2": 806,
+                "y1": 560,
+                "y2": 620
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 839,
+                "x2": 881,
+                "y1": 578,
+                "y2": 620
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 828,
+                "x2": 858,
+                "y1": 553,
+                "y2": 600
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1177,
+                "x2": 1225,
+                "y1": 553,
+                "y2": 661
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1360,
+                "x2": 1445,
+                "y1": 555,
+                "y2": 692
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1497,
+                "x2": 1580,
+                "y1": 578,
+                "y2": 749
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1601,
+                "x2": 1695,
+                "y1": 586,
+                "y2": 765
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1666,
+                "x2": 1745,
+                "y1": 580,
+                "y2": 754
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1819,
+                "x2": 1929,
+                "y1": 563,
+                "y2": 812
+            },
+            "category": "Pedestrian"
+        },
+        {
+            "box2d": {
+                "x1": 1674,
+                "x2": 1936,
+                "y1": 586,
+                "y2": 1017
+            },
+            "category": "Bicycle"
+        },
+        {
+            "box2d": {
+                "x1": 889,
+                "x2": 961,
+                "y1": 356,
+                "y2": 389
+            },
+            "category": "Signal"
+        },
+        {
+            "box2d": {
+                "x1": 778,
+                "x2": 815,
+                "y1": 426,
+                "y2": 459
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 1102,
+                "x2": 1177,
+                "y1": 210,
+                "y2": 313
+            },
+            "category": "Signs"
+        },
+        {
+            "box2d": {
+                "x1": 925,
+                "x2": 1001,
+                "y1": 558,
+                "y2": 618
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 965,
+                "x2": 1065,
+                "y1": 567,
+                "y2": 646
+            },
+            "category": "Car"
+        },
+        {
+            "box2d": {
+                "x1": 777,
+                "x2": 811,
+                "y1": 369,
+                "y2": 426
+            },
+            "category": "Signs"
+        }
+    ]
+}

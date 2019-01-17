@@ -1,0 +1,27 @@
+{
+    "attributes": {
+        "route": "Saitama",
+        "timeofday": "morning"
+    },
+    "frameIndex": 1,
+    "labels": [
+        {
+            "box2d": {
+                "x1": 766,
+                "x2": 1057,
+                "y1": 375,
+                "y2": 756
+            },
+            "category": "Truck"
+        },
+        {
+            "box2d": {
+                "x1": 1236,
+                "x2": 1268,
+                "y1": 602,
+                "y2": 686
+            },
+            "category": "Pedestrian"
+        }
+    ]
+}
