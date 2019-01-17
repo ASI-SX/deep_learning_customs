@@ -391,7 +391,75 @@ class YoloNN():
                 layer_list.append(block_conv_5)
             return y
 
-    def yolo3(self, x, num_classes=None, mask=[1, 2, 3], model_h=608, model_w=1216):
+
+    def reorg_layer(self, feature_out_layer, num_classes, anchors, model_h, model_w):
+
+        x = tf.convert_to_tensor(feature_out_layer)
+        input_shape = x.get_shape()
+
+        batch, grid_h, grid_w, grid_out = input_shape[0].value, input_shape[1].value, input_shape[2].value, input_shape[
+            3].value
+        num_anchors = len(anchors)
+        lout = int(grid_out / num_anchors)
+
+        stride_h = model_h / grid_h
+        if model_w is None:
+            stride_w = model_w / grid_w
+
+        x = tf.reshape(x, [-1, grid_h, grid_w, num_anchors, lout])
+
+        feature_class, feature_xy, feature_wh, feature_conf = tf.split(x, [num_classes, 2, 2, 1], axis=-1)
+        
+#         print(feature_class)
+#         print(feature_xy)
+#         print(feature_wh)
+#         print(feature_conf)
+
+        xy_offset = self.get_offset(grid_h, grid_w)
+        feature_xy = tf.nn.sigmoid(feature_xy)
+
+        feature_xy = feature_xy + xy_offset
+        box_xy = feature_xy * stride_h
+        box_wh = tf.exp(feature_wh) * anchors
+        boxes = tf.concat([box_xy, box_wh], axis=-1)
+
+        return xy_offset, boxes, feature_conf, feature_class
+
+
+
+    def get_offset(self, grid_h, grid_w): # ToDo:use itertools.product 
+        grid_x = np.arange(grid_w)
+        grid_y = np.arange(grid_h)
+        x, y = np.meshgrid(grid_y, grid_x)
+        x = np.reshape(x, (grid_h, grid_w, -1))
+        y = np.reshape(y, (grid_h, grid_w, -1))
+        x_y_offset = np.concatenate((x, y), -1)
+        x_y_offset = np.reshape(x_y_offset, [grid_h, grid_w, 1, 2])
+        return x_y_offset
+
+
+    def forward_yolo_layer(self, layer, network):
+        avg_iou = 0
+        recall = 0
+        recall75 = 0
+        avg_cat = 0
+        avg_obj = 0
+        avg_anyobj = 0
+        count = 0
+        class_count = 0
+
+        layer.cost = 0
+
+        return None
+
+    def entry_index(self, layer, batch, location, entry):
+        n = location / (layer.w * layer.h)
+        loc = location % (layer.w * layer.h)
+        out = batch * layer.outputs + n * layer.w * layer.h * (layer.classes + 4 + 1) + entry * layer.w * layer.h + loc
+        return out
+
+
+    def extract_feature(self, x, num_classes=None, mask=[0, 1, 2], model_h=608, model_w=608):
         """
 
         :param x: scale_1 [None, 13, 13, 3*(classes + 4 + 1)]
@@ -418,79 +486,16 @@ class YoloNN():
 
 
         xy_offset, boxes, feature_conf, feature_class = self.reorg_layer(x, num_classes, anchors, model_h, model_w)
-        print(xy_offset)
-        print(boxes)
-        print(feature_conf)
-        print(feature_class)
+        # xy_offset :type is ndarray
+#         print(type(xy_offset),xy_offset)
+#         print(type(boxes),boxes, boxes)
+#         print(type(feature_conf),feature_conf)
+#         print(type(feature_class),feature_class)
 
+        return (xy_offset, boxes, feature_conf, feature_class)
+    
 
-    def reorg_layer(self, feature_out_layer, num_classes, anchors, model_h, model_w):
-
-        x = tf.convert_to_tensor(feature_out_layer)
-        input_shape = x.get_shape()
-
-        batch, grid_h, grid_w, grid_out = input_shape[0].value, input_shape[1].value, input_shape[2].value, input_shape[
-            3].value
-        num_anchors = len(anchors)
-        lout = int(grid_out / num_anchors)
-
-        stride_h = model_h / grid_h
-        if model_w is None:
-            stride_w = model_w / grid_w
-
-        x = tf.reshape(x, [-1, grid_h, grid_w, num_anchors, lout])
-
-        feature_class, feature_xy, feature_wh, feature_conf = tf.split(x, [num_classes, 2, 2, 1], axis=-1)
-
-        print(feature_class)
-        print(feature_xy)
-        print(feature_wh)
-        print(feature_conf)
-
-        xy_offset = self.get_offset(grid_h, grid_w)
-        feature_xy = tf.nn.sigmoid(feature_xy)
-
-        feature_xy = feature_xy + xy_offset
-        box_xy = feature_xy * stride_h
-        box_wh = tf.exp(feature_wh) * anchors
-        boxes = tf.concat([box_xy, box_wh], axis=-1)
-
-        return xy_offset, boxes, feature_conf, feature_class
-
-
-    def get_offset(self, grid_h, grid_w):
-        grid_x = np.arange(grid_w)
-        grid_y = np.arange(grid_h)
-        x, y = np.meshgrid(grid_y, grid_x)
-        x = np.reshape(x, (grid_h, grid_w, -1))
-        y = np.reshape(y, (grid_h, grid_w, -1))
-        x_y_offset = np.concatenate((x, y), -1)
-        x_y_offset = np.reshape(x_y_offset, [grid_h, grid_w, 1, 2])
-        return x_y_offset
-
-    def forward_yolo_layer(self, layer, network):
-        avg_iou = 0
-        recall = 0
-        recall75 = 0
-        avg_cat = 0
-        avg_obj = 0
-        avg_anyobj = 0
-        count = 0
-        class_count = 0
-
-        layer.cost = 0
-
-        return None
-
-    def entry_index(self, layer, batch, location, entry):
-        n = location / (layer.w * layer.h)
-        loc = location % (layer.w * layer.h)
-        out = batch * layer.outputs + n * layer.w * layer.h * (layer.classes + 4 + 1) + entry * layer.w * layer.h + loc
-        return out
-
-
-
-    def predict(self, feature_maps):
+    def predict(self, feature_maps, num_classes=None, is_training=False): # 
         """
         Note: given by feature_maps, compute the receptive field
               and get boxes, confs and class_probs
@@ -498,36 +503,50 @@ class YoloNN():
                                         [None, 26, 26, 255],
                                         [None, 52, 52, 255],
         """
-        # feature_map_1, feature_map_2, feature_map_3 = feature_maps
-        # feature_map_anchors = [(feature_map_1, self._ANCHORS[6:9]),
-        #                        (feature_map_2, self._ANCHORS[3:6]),
-        #                        (feature_map_3, self._ANCHORS[0:3]), ]
-        #
-        # results = [self.reorg_layer(feature_map, anchors) for (feature_map, anchors) in feature_map_anchors]
-        # boxes_list, confs_list, probs_list = [], [], []
-        #
-        # for result in results:
-        #     boxes, conf_logits, prob_logits = self._reshape(*result)
-        #
-        #     confs = tf.sigmoid(conf_logits)
-        #     probs = tf.sigmoid(prob_logits)
-        #
-        #     boxes_list.append(boxes)
-        #     confs_list.append(confs)
-        #     probs_list.append(probs)
-        #
-        # boxes = tf.concat(boxes_list, axis=1)
-        # confs = tf.concat(confs_list, axis=1)
-        # probs = tf.concat(probs_list, axis=1)
-        #
-        # center_x, center_y, height, width = tf.split(boxes, [1, 1, 1, 1], axis=-1)
-        # x1 = center_x - height / 2
-        # y1 = center_y - width / 2
-        # x2 = center_x + height / 2
-        # y2 = center_y + width / 2
-        #
-        # boxes = tf.concat([x1, y1, x2, y2], axis=-1)
-        # return boxes, confs, probs
+        
+        feature_map_1, feature_map_2, feature_map_3 = feature_maps
+        feature_map_anchors = [(feature_map_1, self._ANCHORS[6:9]),
+                               (feature_map_2, self._ANCHORS[3:6]),
+                               (feature_map_3, self._ANCHORS[0:3]),]
+
+        boxes_list, confs_list, probs_list = [], [], []
+
+        if num_classes is None:
+            num_classes = self._NUM_CLASSES
+
+        for feature in feature_maps:
+            (x_y_offset, boxes, confs, probs) = feature
+            grid_size = x_y_offset.shape[:2]
+            boxes = tf.reshape(boxes, [-1, grid_size[0]*grid_size[1]*3, 4]) # (1, 19, 19, 3, 4) => (1, 1083, 4) 
+
+#             print(probs.shape, probs)
+#             print("=")
+            conf_logits = tf.reshape(confs, [-1, grid_size[0]*grid_size[1]*3, 1])# (1, 19, 19, 3, 1) => (1, 1083, 1)
+            prob_logits = tf.reshape(probs, [-1, grid_size[0]*grid_size[1]*3, num_classes]) # (1, 19, 19, 3, 80)  => (1, 1083, 80)
+#             print(prob_logits.shape, prob_logits)
+            confs = tf.sigmoid(conf_logits)
+            probs = tf.sigmoid(prob_logits)
+        
+            boxes_list.append(boxes)
+            confs_list.append(confs)
+            probs_list.append(probs)
+
+        boxes = tf.concat(boxes_list, axis=1)
+        confs = tf.concat(confs_list, axis=1)
+        probs = tf.concat(probs_list, axis=1)
+
+        center_x, center_y, height, width = tf.split(boxes, [1,1,1,1], axis=-1)
+        x0 = center_x - height / 2
+        y0 = center_y - width  / 2
+        x1 = center_x + height / 2
+        y1 = center_y + width  / 2
+
+        boxes = tf.concat([x0, y0, x1, y1], axis=-1)
+
+        
+        
+        return boxes, confs, probs
+
 
     def box_iou(self, box_pred, box_truth):
         """
@@ -570,9 +589,14 @@ class YoloNN():
         return IoU
 
 
+    def loss(self, loss):
+        return tf.losses.get_total_loss(add_regularization_losses=True, name='total_loss')
+
+
+
 '''--------Test the scale--------'''
 if __name__ == "__main__":
-    t_array = np.arange(1 * 1216 * 608 * 3, dtype=np.float32).reshape((1, 1216, 608, 3))
+    t_array = np.arange(1 * 608 * 608 * 3, dtype=np.float32).reshape((1, 608, 608, 3))
     # box_1 = np.ones((1, 13, 13, 3, 4), dtype=np.float32)
     # print(box_1)
     # box_1 = box_1.reshape((1, 13, 13, 3, 2, 2)) * ((1, 1), (0.1, 0.1))
@@ -582,6 +606,7 @@ if __name__ == "__main__":
     # print(box_2)
     # print(t_array)
     layer_list = []
+    features_list = []
     yolo_nn = YoloNN()
     z = yolo_nn.conv2d_input(t_array, filter=32, layer_list=layer_list)
     z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
@@ -605,7 +630,7 @@ if __name__ == "__main__":
 
     block_5l_1 = yolo_nn.conv2d_5l_block(mid_3, layer_list=layer_list)
     pre_out_l1 = yolo_nn.conv2d_3x3_up(block_5l_1, layer_list=layer_list)
-    feature_out_l1 = yolo_nn.feature_out(pre_out_l1, layer_list=layer_list, name="feature_1x")
+    features_list.append(yolo_nn.feature_out(pre_out_l1, layer_list=layer_list, name="feature_1x"))
 
     pre_up_l1 = yolo_nn.conv2d_1x1_down(block_5l_1, layer_list=layer_list)
     up_1 = yolo_nn.up_sampling2d(pre_up_l1, layer_list=layer_list)
@@ -613,7 +638,7 @@ if __name__ == "__main__":
 
     block_5l_2 = yolo_nn.conv2d_5l_block(route_1, filter=256, layer_list=layer_list)
     pre_out_l2 = yolo_nn.conv2d_3x3_up(block_5l_2)
-    feature_out_l2 = yolo_nn.feature_out(pre_out_l2, layer_list=layer_list, name="feature_2x")
+    features_list.append(yolo_nn.feature_out(pre_out_l2, layer_list=layer_list, name="feature_2x"))
 
     pre_up_l2 = yolo_nn.conv2d_3x3_up(block_5l_2, layer_list=layer_list)
     up_2 = yolo_nn.up_sampling2d(pre_up_l2, layer_list=layer_list)
@@ -621,10 +646,21 @@ if __name__ == "__main__":
     route_2 = yolo_nn.route2d(mid_1, up_2, layer_list=layer_list)
     block_5l_3 = yolo_nn.conv2d_5l_block(route_2, filter=128, layer_list=layer_list)
     pre_out_l3 = yolo_nn.conv2d_3x3_up(block_5l_3, layer_list=layer_list)
-    feature_out_l3 = yolo_nn.feature_out(pre_out_l3, layer_list=layer_list, name="feature_3x")
+    features_list.append(yolo_nn.feature_out(pre_out_l3, layer_list=layer_list, name="feature_3x"))
 
-    yolo_nn.yolo3(feature_out_l1)
+    
 
+    extracts = []
+    # feature_out_l1 = (1, 13, 13, 255) => anchor (116, 90), (156, 198), (373, 326)
+    # feature_out_l2 = (1, 26, 26, 255) => anchor (30, 61), (62, 45), (59, 119),
+    # feature_out_l3 = (1, 52, 52, 255) => anchor (10, 13), (16, 30), (33, 23), 
+
+    for i, feature in enumerate(features_list):
+        mask =list(range(-3*i+6, -3*i+9)) 
+        extracts.append(yolo_nn.extract_feature(feature, mask=mask))
+
+    print("final ")
+    print(yolo_nn.predict(extracts))
     # iou = yolo_nn.box_iou(box_1, box_2)
     # print(iou)
     # with tf.Session() as sess:
