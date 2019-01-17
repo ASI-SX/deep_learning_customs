@@ -391,7 +391,7 @@ class YoloNN():
                 layer_list.append(block_conv_5)
             return y
 
-    def yolo3(self, x, num_classes=None, mask=[1, 2, 3], model_h=608, model_w=608):
+    def yolo3(self, x, num_classes=None, mask=[1, 2, 3], model_h=608, model_w=1216):
         """
 
         :param x: scale_1 [None, 13, 13, 3*(classes + 4 + 1)]
@@ -461,11 +461,11 @@ class YoloNN():
     def get_offset(self, grid_h, grid_w):
         grid_x = np.arange(grid_w)
         grid_y = np.arange(grid_h)
-        x, y = np.meshgrid(grid_x, grid_y)
-        x = np.reshape(x, (grid_w, grid_h, -1))
-        y = np.reshape(y, (grid_w, grid_h, -1))
+        x, y = np.meshgrid(grid_y, grid_x)
+        x = np.reshape(x, (grid_h, grid_w, -1))
+        y = np.reshape(y, (grid_h, grid_w, -1))
         x_y_offset = np.concatenate((x, y), -1)
-        x_y_offset = np.reshape(x_y_offset, [grid_w, grid_h, 1, 2])
+        x_y_offset = np.reshape(x_y_offset, [grid_h, grid_w, 1, 2])
         return x_y_offset
 
     def forward_yolo_layer(self, layer, network):
@@ -572,7 +572,7 @@ class YoloNN():
 
 '''--------Test the scale--------'''
 if __name__ == "__main__":
-    t_array = np.arange(1 * 608 * 608 * 3, dtype=np.float32).reshape((1, 608, 608, 3))
+    t_array = np.arange(1 * 1216 * 608 * 3, dtype=np.float32).reshape((1, 1216, 608, 3))
     # box_1 = np.ones((1, 13, 13, 3, 4), dtype=np.float32)
     # print(box_1)
     # box_1 = box_1.reshape((1, 13, 13, 3, 2, 2)) * ((1, 1), (0.1, 0.1))
