@@ -492,14 +492,22 @@ class YoloNN():
         xy_offset, boxes, feature_conf, feature_class = self.reorg_layer(feature_map, num_classes, anchors, model_h, model_w)
         # xy_offset :type is ndarray
 #         print(type(xy_offset),xy_offset)
-#         print(type(boxes),boxes, boxes)
-#         print(type(feature_conf),feature_conf)
-#         print(type(feature_class),feature_class)
-
+        print(type(boxes),boxes, boxes)
+        print(type(feature_conf),feature_conf)
+        print(type(feature_class),feature_class)
         return (xy_offset, boxes, feature_conf, feature_class)
     
+    def non_maximum_supression(self, extracts, num_classes=None): # ToDo: グリッドないでsuppressする
 
-    def predict(self, extracts, num_classes=None): # 
+        pass
+
+
+    def decode_image_coord(self, num_classes=None): # ToDo: グリッド座標を画像座標に変換する
+
+        pass
+
+
+    def predict(self, extracts, num_classes=None): # ToDo: conf のしきい値を入れる
         """
         Note: given by feature_maps, compute the receptive field
               and get boxes, confs and class_probs
@@ -544,7 +552,7 @@ class YoloNN():
 
         boxes = tf.concat([x0, y0, x1, y1], axis=-1)
         
-        return boxes, confs, probs
+        return boxes, confs, probs # ToDo: 
 
 
     def box_iou(self, box_pred, box_truth):
@@ -661,12 +669,13 @@ def infer(model, infer_data):
             mask =list(range(-3*i+6, -3*i+9)) 
             print(mask, type(feature),feature.shape)
             extracts.append(model.extract_feature(feature, mask=mask, model_h=1216, model_w=1920))
+            
         model.predict(extracts, model._NUM_CLASSES)
 
     # ToDo: final output decode form extracts
     return extracts
 
-def train(model):# ToDo: Set Train Session    
+def train(model):# ToDo: Set Train Session
     pass
 
 
