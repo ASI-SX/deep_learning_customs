@@ -7,11 +7,15 @@ from tensorflow.image import ResizeMethod
 
 class YoloNN():
     _ANCHORS = [[10, 13], [16, 30], [33, 23], [30, 61], [62, 45], [59, 119], [116, 90], [156, 198], [373, 326]]
-    _NUM_CLASSES = 80
+#     _NUM_CLASSES = 80
+    _NUM_CLASSES = 10
     meta_classes = ["person", "bicycle", "car"]
 
     def __init__(self):
         super(YoloNN, self).__init__()
+        self.feature_maps = []
+        self.inputs = None
+        self.graph = None
 
     def residual_block(self, x, filter=None, format="NHWC", name="residual_block", batch_normalization=True,
                        layer_list=None):
@@ -459,7 +463,7 @@ class YoloNN():
         return out
 
 
-    def extract_feature(self, x, num_classes=None, mask=[0, 1, 2], model_h=608, model_w=608):
+    def extract_feature(self, feature_map, num_classes=None, mask=[0, 1, 2], model_h=None, model_w=None):
         """
 
         :param x: scale_1 [None, 13, 13, 3*(classes + 4 + 1)]
@@ -485,7 +489,7 @@ class YoloNN():
         print(anchors)
 
 
-        xy_offset, boxes, feature_conf, feature_class = self.reorg_layer(x, num_classes, anchors, model_h, model_w)
+        xy_offset, boxes, feature_conf, feature_class = self.reorg_layer(feature_map, num_classes, anchors, model_h, model_w)
         # xy_offset :type is ndarray
 #         print(type(xy_offset),xy_offset)
 #         print(type(boxes),boxes, boxes)
@@ -495,7 +499,7 @@ class YoloNN():
         return (xy_offset, boxes, feature_conf, feature_class)
     
 
-    def predict(self, feature_maps, num_classes=None, is_training=False): # 
+    def predict(self, extracts, num_classes=None): # 
         """
         Note: given by feature_maps, compute the receptive field
               and get boxes, confs and class_probs
@@ -504,7 +508,7 @@ class YoloNN():
                                         [None, 52, 52, 255],
         """
         
-        feature_map_1, feature_map_2, feature_map_3 = feature_maps
+        feature_map_1, feature_map_2, feature_map_3 = extracts
         feature_map_anchors = [(feature_map_1, self._ANCHORS[6:9]),
                                (feature_map_2, self._ANCHORS[3:6]),
                                (feature_map_3, self._ANCHORS[0:3]),]
@@ -514,16 +518,13 @@ class YoloNN():
         if num_classes is None:
             num_classes = self._NUM_CLASSES
 
-        for feature in feature_maps:
+        for feature in extracts:
             (x_y_offset, boxes, confs, probs) = feature
             grid_size = x_y_offset.shape[:2]
             boxes = tf.reshape(boxes, [-1, grid_size[0]*grid_size[1]*3, 4]) # (1, 19, 19, 3, 4) => (1, 1083, 4) 
-
-#             print(probs.shape, probs)
-#             print("=")
             conf_logits = tf.reshape(confs, [-1, grid_size[0]*grid_size[1]*3, 1])# (1, 19, 19, 3, 1) => (1, 1083, 1)
             prob_logits = tf.reshape(probs, [-1, grid_size[0]*grid_size[1]*3, num_classes]) # (1, 19, 19, 3, 80)  => (1, 1083, 80)
-#             print(prob_logits.shape, prob_logits)
+
             confs = tf.sigmoid(conf_logits)
             probs = tf.sigmoid(prob_logits)
         
@@ -542,8 +543,6 @@ class YoloNN():
         y1 = center_y + width  / 2
 
         boxes = tf.concat([x0, y0, x1, y1], axis=-1)
-
-        
         
         return boxes, confs, probs
 
@@ -593,10 +592,93 @@ class YoloNN():
         return tf.losses.get_total_loss(add_regularization_losses=True, name='total_loss')
 
 
+def create_model(t_array, is_training=False):
+    mlp_graph = tf.Graph()
+    yolo_nn = None
+#     init = tf.global_variables_initializer()
+    with mlp_graph.as_default():
+        layer_list = []
+
+        yolo_nn = YoloNN()
+        yolo_nn.inputs = tf.placeholder(tf.float32, t_array.shape, name="input")
+
+        z = yolo_nn.conv2d_input(t_array, filter=32, layer_list=layer_list)
+        z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
+        for i in range(1):
+            z = yolo_nn.residual_block(z, layer_list=layer_list, name="residual_block1")
+        z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
+        for i in range(2):
+            z = yolo_nn.residual_block(z, layer_list=layer_list,name="residual_block2")
+        z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
+        for i in range(8):
+            z = yolo_nn.residual_block(z, layer_list=layer_list, name="residual_block8_1")
+        mid_1 = z
+        z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
+        for i in range(8):
+            z = yolo_nn.residual_block(z, layer_list=layer_list, name="residual_block8_2")
+        mid_2 = z
+        z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
+        for i in range(4):
+            z = yolo_nn.residual_block(z, layer_list=layer_list, name="residual_block8_4")
+        mid_3 = z
+    
+        block_5l_1 = yolo_nn.conv2d_5l_block(mid_3, layer_list=layer_list)
+        pre_out_l1 = yolo_nn.conv2d_3x3_up(block_5l_1, layer_list=layer_list)
+        yolo_nn.feature_maps.append(yolo_nn.feature_out(pre_out_l1, layer_list=layer_list, name="feature_1x"))
+    
+        pre_up_l1 = yolo_nn.conv2d_1x1_down(block_5l_1, layer_list=layer_list)
+        up_1 = yolo_nn.up_sampling2d(pre_up_l1, layer_list=layer_list)
+        route_1 = yolo_nn.route2d(up_1, mid_2, layer_list=layer_list)
+    
+        block_5l_2 = yolo_nn.conv2d_5l_block(route_1, filter=256, layer_list=layer_list)
+        pre_out_l2 = yolo_nn.conv2d_3x3_up(block_5l_2)
+        yolo_nn.feature_maps.append(yolo_nn.feature_out(pre_out_l2, layer_list=layer_list, name="feature_2x"))
+    
+        pre_up_l2 = yolo_nn.conv2d_3x3_up(block_5l_2, layer_list=layer_list)
+        up_2 = yolo_nn.up_sampling2d(pre_up_l2, layer_list=layer_list)
+    
+        route_2 = yolo_nn.route2d(mid_1, up_2, layer_list=layer_list)
+        block_5l_3 = yolo_nn.conv2d_5l_block(route_2, filter=128, layer_list=layer_list)
+        pre_out_l3 = yolo_nn.conv2d_3x3_up(block_5l_3, layer_list=layer_list)
+        yolo_nn.feature_maps.append(yolo_nn.feature_out(pre_out_l3, layer_list=layer_list, name="feature_3x"))
+
+    yolo_nn.graph = mlp_graph
+
+    return yolo_nn
+
+
+def infer(model, infer_data):
+    extracts = []
+    
+    with tf.Session(graph=model.graph) as sess_predict:
+        init = tf.global_variables_initializer()
+        sess_predict.run(init)
+        sess_predict.run([model.feature_maps], feed_dict={model.inputs: infer_data})
+        # feature_out_l1 = (1, 13, 13, 255) => anchor (116, 90), (156, 198), (373, 326)
+        # feature_out_l2 = (1, 26, 26, 255) => anchor (30, 61), (62, 45), (59, 119),
+        # feature_out_l3 = (1, 52, 52, 255) => anchor (10, 13), (16, 30), (33, 23),     
+        for i, feature in enumerate(model.feature_maps):
+            mask =list(range(-3*i+6, -3*i+9)) 
+            print(mask, type(feature),feature.shape)
+            extracts.append(model.extract_feature(feature, mask=mask, model_h=1216, model_w=1920))
+        model.predict(extracts, model._NUM_CLASSES)
+
+    # ToDo: final output decode form extracts
+    return extracts
+
+def train(model):# ToDo: Set Train Session    
+    pass
+
 
 '''--------Test the scale--------'''
 if __name__ == "__main__":
-    t_array = np.arange(1 * 608 * 608 * 3, dtype=np.float32).reshape((1, 608, 608, 3))
+    t_array = np.arange(1 * 1216 * 1920 * 3, dtype=np.float32).reshape((1, 1216, 1920, 3)) # h , w
+    model =create_model(t_array) # ToDo: remove t_array data, pass t_array.shape 
+    infer(model, t_array)
+
+
+
+#     t_array = np.arange(1 * 608 * 608 * 3, dtype=np.float32).reshape((1, 608, 608, 3)) # h , w
     # box_1 = np.ones((1, 13, 13, 3, 4), dtype=np.float32)
     # print(box_1)
     # box_1 = box_1.reshape((1, 13, 13, 3, 2, 2)) * ((1, 1), (0.1, 0.1))
@@ -605,62 +687,8 @@ if __name__ == "__main__":
     # box_2 = np.ones((1, 13, 13, 3, 4), dtype=np.float32)
     # print(box_2)
     # print(t_array)
-    layer_list = []
-    features_list = []
-    yolo_nn = YoloNN()
-    z = yolo_nn.conv2d_input(t_array, filter=32, layer_list=layer_list)
-    z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
-    for i in range(1):
-        z = yolo_nn.residual_block(z, layer_list=layer_list)
-    z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
-    for i in range(2):
-        z = yolo_nn.residual_block(z, layer_list=layer_list)
-    z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
-    for i in range(8):
-        z = yolo_nn.residual_block(z, layer_list=layer_list)
-    mid_1 = z
-    z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
-    for i in range(8):
-        z = yolo_nn.residual_block(z, layer_list=layer_list)
-    mid_2 = z
-    z = yolo_nn.conv2d_before_residual(z, layer_list=layer_list)
-    for i in range(4):
-        z = yolo_nn.residual_block(z, layer_list=layer_list)
-    mid_3 = z
 
-    block_5l_1 = yolo_nn.conv2d_5l_block(mid_3, layer_list=layer_list)
-    pre_out_l1 = yolo_nn.conv2d_3x3_up(block_5l_1, layer_list=layer_list)
-    features_list.append(yolo_nn.feature_out(pre_out_l1, layer_list=layer_list, name="feature_1x"))
 
-    pre_up_l1 = yolo_nn.conv2d_1x1_down(block_5l_1, layer_list=layer_list)
-    up_1 = yolo_nn.up_sampling2d(pre_up_l1, layer_list=layer_list)
-    route_1 = yolo_nn.route2d(up_1, mid_2, layer_list=layer_list)
-
-    block_5l_2 = yolo_nn.conv2d_5l_block(route_1, filter=256, layer_list=layer_list)
-    pre_out_l2 = yolo_nn.conv2d_3x3_up(block_5l_2)
-    features_list.append(yolo_nn.feature_out(pre_out_l2, layer_list=layer_list, name="feature_2x"))
-
-    pre_up_l2 = yolo_nn.conv2d_3x3_up(block_5l_2, layer_list=layer_list)
-    up_2 = yolo_nn.up_sampling2d(pre_up_l2, layer_list=layer_list)
-
-    route_2 = yolo_nn.route2d(mid_1, up_2, layer_list=layer_list)
-    block_5l_3 = yolo_nn.conv2d_5l_block(route_2, filter=128, layer_list=layer_list)
-    pre_out_l3 = yolo_nn.conv2d_3x3_up(block_5l_3, layer_list=layer_list)
-    features_list.append(yolo_nn.feature_out(pre_out_l3, layer_list=layer_list, name="feature_3x"))
-
-    
-
-    extracts = []
-    # feature_out_l1 = (1, 13, 13, 255) => anchor (116, 90), (156, 198), (373, 326)
-    # feature_out_l2 = (1, 26, 26, 255) => anchor (30, 61), (62, 45), (59, 119),
-    # feature_out_l3 = (1, 52, 52, 255) => anchor (10, 13), (16, 30), (33, 23), 
-
-    for i, feature in enumerate(features_list):
-        mask =list(range(-3*i+6, -3*i+9)) 
-        extracts.append(yolo_nn.extract_feature(feature, mask=mask))
-
-    print("final ")
-    print(yolo_nn.predict(extracts))
     # iou = yolo_nn.box_iou(box_1, box_2)
     # print(iou)
     # with tf.Session() as sess:
