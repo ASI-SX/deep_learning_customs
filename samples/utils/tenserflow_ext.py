@@ -19,7 +19,6 @@ def add_pad2d(x, pad_size=1, name="pad2d", format="NHWC"):
             z = tf.pad(z, [[0, 0], [pad_size, pad_size], [pad_size, pad_size], [0, 0]], name=scope)
         elif format == "NCHW":
             z = tf.pad(z, [[0, 0], [0, 0], [pad_size, pad_size], [pad_size, pad_size]], name=scope)
-
     return z
 
 
@@ -42,7 +41,7 @@ def add_conv2d(x, output_size, h_kernel, w_kernel, name, h_stride=1, w_stride=1,
         elif activation == "leaky_relu":
             z = tf.nn.leaky_relu(z, alpha=leaky_relu_alpha, name=scope)
         elif activation == "linear":
-            z = add_linear(z)
+            z = add_linear(z, name=scope)
         return z
 
 
@@ -60,7 +59,7 @@ def add_fc(x, output_size, name, activation="relu", leaky_relu_alpha=0.1):
         elif activation == "leaky_relu":
             z = tf.nn.leaky_relu(z, alpha=leaky_relu_alpha, name=scope)
         elif activation == "linear":
-            z = add_linear(z)
+            z = add_linear(z, name=scope)
 
         return z
 
@@ -93,5 +92,7 @@ def add_shortcut(x, shortcut, name="short_cut"):
     return z
 
 
-def add_linear(x):
-    return x
+def add_linear(x, name="linear"):
+    return tf.multiply(x, 1, name=name)
+
+

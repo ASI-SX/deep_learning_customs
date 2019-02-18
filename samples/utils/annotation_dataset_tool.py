@@ -4,6 +4,7 @@ from PIL import Image
 import cv2
 import json
 import os
+import xml.etree.ElementTree as ET
 
 
 class AnnotationDatasetTool():
@@ -12,7 +13,8 @@ class AnnotationDatasetTool():
     category_class_extend = ['day', 'morning', 'night']
 
     def __init__(self, training_flag=False, data_list=None, label_list=None, repeat=False, one_hot_classes=None,
-                 resize_flag=False, target_h=None, target_w=None, box_format_trans=None, category_class=None, **kwargs):
+                 resize_flag=False, target_h=None, target_w=None, box_format_trans=None, category_class=None,
+                 label_file_type=None, format="NHWC", **kwargs):
         super(AnnotationDatasetTool, self).__init__()
         self.training = training_flag
         self.data_list = data_list
@@ -24,6 +26,8 @@ class AnnotationDatasetTool():
         self.resize_flag = resize_flag
         self.target_h = target_h
         self.target_w = target_w
+        self.label_file_type = label_file_type
+        self.format = format
 
         if category_class is not None:
             self.category_class = category_class
@@ -52,11 +56,11 @@ class AnnotationDatasetTool():
             x_path_batch = self.data_list[batch_mask]
             y_path_batch = self.label_list[batch_mask]
             x_batch, y_batch = self.get_train_batch(x_path_batch, y_path_batch, one_hot_classes=self.one_hot_classes)
-            return x_batch, y_batch
+            return x_batch, y_batch, x_path_batch, y_path_batch
         else:
             x_path_batch = self.data_list[batch_mask]
             x_batch = self.get_infer_batch(x_path_batch)
-            return x_batch
+            return x_batch, x_path_batch
 
     def next_batch_once(self, batch_size):
         if len(self.index_list) == 0:
@@ -68,11 +72,11 @@ class AnnotationDatasetTool():
             x_path_batch = self.data_list[batch_mask]
             y_path_batch = self.label_list[batch_mask]
             x_batch, y_batch = self.get_train_batch(x_path_batch, y_path_batch, one_hot_classes=self.one_hot_classes)
-            return x_batch, y_batch
+            return x_batch, y_batch, x_path_batch, y_path_batch
         else:
             x_path_batch = self.data_list[batch_mask]
             x_batch = self.get_infer_batch(x_path_batch)
-            return x_batch
+            return x_batch, x_path_batch
 
     def index_reset(self):
         self.index_list = list(np.arange(0, self.total_size))
@@ -84,32 +88,33 @@ class AnnotationDatasetTool():
             img_array, resize_rate_h, resize_rate_w = self.image_generator(data_path_list[index],
                                                                            target_h=self.target_h,
                                                                            target_w=self.target_w,
-                                                                           rescale=rescale)
-            train_label, daytime = self.get_annotation_label(label_path_list[index], label_file_type="json",
-                                                             resize_rate_h=resize_rate_h,
-                                                             resize_rate_w=resize_rate_w,
-                                                             one_hot_classes=one_hot_classes)
+                                                                           rescale=rescale, format=self.format)
+            train_label = self.get_annotation_label(label_path_list[index],
+                                                    label_file_type=self.label_file_type,
+                                                    resize_rate_h=resize_rate_h,
+                                                    resize_rate_w=resize_rate_w,
+                                                    one_hot_classes=one_hot_classes)
             x_train.append(img_array)
             y_train.append(train_label)
         return x_train, y_train
 
     def get_infer_batch(self, data_path_list, rescale=None):
         x_infer = []
-        for index, data_path in data_path_list:
+        for index, data_path in enumerate(data_path_list):
             img_valid, resize_rate_h, resize_rate_w = self.image_generator(data_path, target_h=self.target_h,
-                                                                           target_w=self.target_w, rescale=rescale)
+                                                                           target_w=self.target_w, rescale=rescale, format=self.format)
             x_infer.append(img_valid)
         return x_infer
 
-    def image_generator(self, full_path, target_h=224, target_w=224, rescale=None, is_opencv=True):
+    def image_generator(self, full_path, target_h=224, target_w=224, rescale=None, is_opencv=True, format="NHWC",
+                        histogram=True):
 
         if is_opencv:
             # Use Opencv
             image_bgr = cv2.imread(full_path, 1)
             height, width = image_bgr.shape[0], image_bgr.shape[1]
-
             image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
-            image_cv = cv2.resize(image_rgb, (target_h, target_w))
+            image_cv = cv2.resize(image_rgb, (target_w, target_h))
             image_array = image_cv
 
             # print(image_bgr)
@@ -132,29 +137,33 @@ class AnnotationDatasetTool():
         if rescale is not None:
             image_array = image_array / rescale
 
+        if format == "NCHW":
+            image_array = np.transpose(image_array, (2, 0, 1))
+
         return image_array, resize_rate_h, resize_rate_w
 
     def get_annotation_label(self, full_path, annotation_type=None, label_file_type=None, format_trans=None,
                              resize_rate_h=None, resize_rate_w=None, one_hot_classes=None):
 
         if label_file_type == "json":
-            annotation_data = self.json_reader(full_path)
-        elif label_file_type == "xml":
-            annotation_data = self.xml_reader(full_path)
-        else:
-            annotation_data = None
-
-        if annotation_type == "bbox":
-            pass
-        elif annotation_type == "anchorbox":
-            pass
-        else:
-            bbox_classes, day_time = self.get_bbox_json_ext(json_data=annotation_data, resize_rate_h=resize_rate_h,
+            bbox_classes, day_time = self.get_bbox_json_ext(json_file_path=full_path, resize_rate_h=resize_rate_h,
                                                             resize_rate_w=resize_rate_w,
                                                             one_hot_classes=one_hot_classes)
-            return bbox_classes, day_time
+            return bbox_classes
 
-    def get_bbox_json_ext(self, json_data, resize_rate_h=None, resize_rate_w=None, one_hot_classes=None):
+        elif label_file_type == "voc_xml":
+            class_list = self.get_bbox_xml_ext(full_path, resize_rate_h=resize_rate_h,
+                                               resize_rate_w=resize_rate_w,
+                                               one_hot_classes=one_hot_classes)
+
+            return class_list
+        else:
+            return None
+            pass
+
+    def get_bbox_json_ext(self, json_file_path, resize_rate_h=None, resize_rate_w=None, one_hot_classes=None):
+        with open(json_file_path, encoding="utf-8") as json_file:
+            json_data = json.loads(json_file.read())
         classes_truth = []
         ground_truth = []
         day_time = self.category_class_extend.index(json_data['attributes']['timeofday'])
@@ -179,15 +188,36 @@ class AnnotationDatasetTool():
             bbox_array[:, 0::2] *= resize_rate_w
         else:
             pass
-        train_label = np.hstack((classes_array, bbox_array)).astype(np.uint16)
+        train_label = np.hstack((bbox_array, classes_array)).astype(np.uint16)
 
         return train_label, day_time
 
-    def json_reader(self, fullpath):
-        with open(fullpath, encoding="utf-8") as json_file:
+    def get_bbox_xml_ext(self, xml_file, resize_rate_h=None, resize_rate_w=None, one_hot_classes=None):
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        train_labels = []
+
+        for boxes in root.iter('object'):
+            class_name = boxes.find('name').text
+            class_id = self.category_class.index(class_name)
+            if one_hot_classes is not None:
+                classes_array = np.identity(one_hot_classes)[class_id]
+            else:
+                classes_array = np.expand_dims(class_id, 1)
+            ymin, xmin, ymax, xmax = None, None, None, None
+
+            for box in boxes.findall("bndbox"):
+                xmin = int(box.find("xmin").text) * resize_rate_w
+                ymin = int(box.find("ymin").text) * resize_rate_h
+                xmax = int(box.find("xmax").text) * resize_rate_w
+                ymax = int(box.find("ymax").text) * resize_rate_h
+
+            boxes_item = [xmin, ymin, xmax, ymax]
+            train_label = np.hstack((boxes_item, classes_array)).astype(np.uint16)
+            train_labels.append(train_label)
+        return train_labels
+
+    def json_reader(self, json_file_path: str):
+        with open(json_file_path, encoding="utf-8") as json_file:
             json_data = json.loads(json_file.read())
         return json_data
-
-    def xml_reader(self, fullpath):
-        xml_data = []
-        return xml_data
